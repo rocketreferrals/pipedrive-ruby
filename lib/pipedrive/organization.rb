@@ -9,6 +9,15 @@ module Pipedrive
       Deal.all(get "#{resource_path}/#{id}/deals")
     end
 
+    def merge_org(opts = {})
+      res = put "#{resource_path}/#{opts[:org_id]}/merge", :body => {merge_with_id: id}
+      if res.success?
+        res['data']
+      else
+        false
+      end
+    end
+
     class << self
 
       def find_or_create_by_name(name, opts={})
